@@ -18,11 +18,23 @@ func NewUserController() UserController {
 }
 
 func (g UserController) Create(c *gin.Context) {
+
 	var r req.Org
-	// 数据验证
 	if err := c.ShouldBind(&r); err != nil {
 		log.Println(err.Error())
 		return
 	}
 	g.s.Reg(r)
+}
+func (g UserController) Login(c *gin.Context) {
+
+	var r req.Org
+	if err := c.ShouldBind(&r); err != nil {
+		log.Println(err.Error())
+		return
+	}
+	var flag = g.s.Login(r)
+	if flag {
+		//返回token
+	}
 }

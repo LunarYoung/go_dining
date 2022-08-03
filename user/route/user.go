@@ -15,6 +15,7 @@ func InitRouter() {
 	v1 := router.Group("dining")
 	{
 		c := controller.NewUserController()
+		v1.POST("/reg", c.Create)
 		v1.POST("/login", c.Create)
 
 	}

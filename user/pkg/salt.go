@@ -8,12 +8,12 @@ import (
  * hash 加密密码
  * @param string pwd 待加密的明文密码
  */
-func HashEncode(pwd string) (string, error) {
+func HashEncode(pwd string) string {
 	hash, err := bcrypt.GenerateFromPassword([]byte(pwd), bcrypt.DefaultCost)
 	if err != nil {
-		return "", err
+		return ""
 	}
-	return string(hash), nil
+	return string(hash)
 }
 
 /*

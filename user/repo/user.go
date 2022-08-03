@@ -6,14 +6,23 @@ import (
 	"user/pkg"
 )
 
-type ICategoryRepository interface {
+type UserRepository interface {
 	Create(req model.Org)
+	Login(req model.Org) string
 }
 
-type CategoryRepository struct {
+type userRepository struct {
 }
 
-func (c CategoryRepository) Create(req model.Org) {
+func NewUserService() UserRepository {
+	return &userRepository{}
+}
+func (c userRepository) Login(req model.Org) string {
+	var rep model.Org
+	pkg.Db.Where("phone =?", req.Phone).Find(rep)
+	return rep.PassWord
+}
 
-	pkg.Db.Create(req)
+func (c userRepository) Create(req model.Org) {
+	pkg.Db.Create(&req)
 }
