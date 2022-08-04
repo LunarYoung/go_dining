@@ -8,18 +8,27 @@ import (
 
 func InitRouter() {
 	router := gin.Default()
-	// 要在路由组之前全局使用「跨域中间件」
+
 	router.Use(pkg.Cors())
+	//router.Use(pkg.Logger())
 
 	//pc端口
-	v1 := router.Group("dining")
+	v1 := router.Group("base")
 	{
 		c := controller.NewUserController()
 		v1.POST("/reg", c.Create)
-		v1.POST("/login", c.Create)
+		v1.POST("/login", c.Login)
 
 	}
 
+	router.Use(pkg.JwtToken())
+
+	v2 := router.Group("dining")
+	{
+		c := controller.NewUserController()
+		v2.GET("/test", c.Test)
+
+	}
 	//小程序端口
 	//v2 := router.Group("Applets")
 	//{

@@ -19,7 +19,7 @@ func NewUserService() UserRepository {
 }
 func (c userRepository) Login(req model.Org) string {
 	var rep model.Org
-	pkg.Db.Where("phone =?", req.Phone).Find(rep)
+	pkg.Db.Where("phone =?", req.Phone).Find(&rep)
 	return rep.PassWord
 }
 

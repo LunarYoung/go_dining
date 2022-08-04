@@ -1,0 +1,9 @@
+redis:
+    host: 106.12.108.5:6379
+    db: 3
+
+log:
+    path: log/
+    name: user
+
+rpcHost: 127.0.0.1:8889

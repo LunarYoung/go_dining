@@ -1,0 +1,16 @@
+redis:
+    host: 106.12.108.5:6379
+    db: 3
+
+log:
+    path: log/
+    name: user
+
+rpcHost: 127.0.0.1:8889
+
+oss:
+    bucketName : zengqinggao
+    endpoint : http://oss-cn-shenzhen.aliyuncs.com
+    accessKeyId : LTAI5tKo37aRc2jNmNCq51hi
+    accessKeySecret : D5vdAvM890l25LVladx1PqNvH7AIBM
+    pre : https://zengqinggao.oss-cn-shenzhen.aliyuncs.com/

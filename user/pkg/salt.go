@@ -4,10 +4,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-/*
- * hash 加密密码
- * @param string pwd 待加密的明文密码
- */
+// HashEncode /*
 func HashEncode(pwd string) string {
 	hash, err := bcrypt.GenerateFromPassword([]byte(pwd), bcrypt.DefaultCost)
 	if err != nil {
@@ -16,11 +13,7 @@ func HashEncode(pwd string) string {
 	return string(hash)
 }
 
-/*
- * 验证 hash 密码
- * @param string hashedPwd 已加密的hash密码
- * @param string sourcePwd 确认密码
- */
+// ComparePasswords /*
 func ComparePasswords(hashedPwd string, sourcePwd string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPwd), []byte(sourcePwd))
 	if err != nil {
