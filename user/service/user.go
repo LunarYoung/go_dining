@@ -22,11 +22,17 @@ func NewUserService() UserService {
 	}
 }
 
+// Login
+// @description: 登陆
+// @param req
+// @return flag
+// @2022-08-06 09:35:28
 func (u userService) Login(req req.Org) (flag bool) {
 	var i = model.Org{
 		Phone:    req.Phone,
 		PassWord: pkg.HashEncode(req.PassWord),
 	}
+	//登陆查询数据库
 	var p = u.repo.Login(i)
 	if p == "" {
 		return false
@@ -38,6 +44,10 @@ func (u userService) Login(req req.Org) (flag bool) {
 
 }
 
+// Reg
+// @description: 注册用户
+// @param req
+// @2022-08-06 09:35:44
 func (u userService) Reg(req req.Org) {
 	var i = model.Org{
 		Phone:    req.Phone,

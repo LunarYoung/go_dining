@@ -1,12 +1,10 @@
 package main
 
-import (
-	"user/pkg"
-	"user/route"
-)
+import "user/service"
 
 func main() {
-	pkg.Mysql()
-	pkg.ViperInit()
-	route.InitRouter()
+	//pkg.Mysql()
+	//pkg.ViperInit()
+	//route.InitRouter()
+	service.KafkaSend()
 }

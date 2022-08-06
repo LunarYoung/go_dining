@@ -12,6 +12,9 @@ func InitRouter() {
 	{
 		c := controller.NewOrderController()
 		v2.POST("/oss", c.Oss)
+		v2.POST("/save/order", c.SaveOrder)
+		v2.POST("/search/order", c.SearchOrder)
+		v2.POST("/change/order", c.ChangeOrder)
 
 	}
 

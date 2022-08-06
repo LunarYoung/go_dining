@@ -35,7 +35,7 @@ func (rs *RedisUtil) DelByKey(key string) error {
 func (rs *RedisUtil) GetStr(key string) string {
 	val, err := rs.client.Do("Get", key)
 	if err != nil {
-		return " "
+		return ""
 	} else {
 		if val == nil {
 			return ""
