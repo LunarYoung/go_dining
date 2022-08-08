@@ -3,11 +3,13 @@ package controller
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/copier"
 	"github.com/satori/go.uuid"
 	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
+	"order/model"
 	"order/model/rep"
 	"order/model/req"
 	"order/pkg"
@@ -16,6 +18,7 @@ import (
 
 //es的index
 const order = "order"
+const menu = "menu"
 
 //status 含义
 //	1 下单
@@ -81,15 +84,15 @@ func (u OrderController) SaveOrder(g *gin.Context) {
 		log.Println(err.Error())
 		g.JSON(200, rep.NewBSEJRep())
 	}
-	//var m model.Order
-	//err := copier.Copy(&m, &r)
-	//if err != nil {
-	//	return
-	//}
-	//m.OrderId = uuid.NewV4().String()
-	//
-	//u.s.SaveOrder(m, order)
-	panic("cuoqu")
+	var m model.Order
+	err := copier.Copy(&m, &r)
+	if err != nil {
+		return
+	}
+	m.OrderId = uuid.NewV4().String()
+
+	u.s.SaveOrder(m, order)
+
 	g.JSON(200, rep.NewBSSRep())
 
 }
