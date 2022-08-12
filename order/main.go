@@ -1,16 +1,16 @@
 package main
 
-import (
-	"order/pkg"
-	"order/route"
-)
+import "order/pkg"
 
 func main() {
 
-	pkg.ViperInit()
-	pkg.InitEs()
-	pkg.NewOss()
-	route.InitRouter()
+	//pkg.ViperInit()
+	//pkg.InitEs()
+	//pkg.NewOss()
+	//route.InitRouter()
+	//pkg.ETCD()
+	//server.S()
+	pkg.Nacos()
 	//service.KafkaRe()
 	//pkg.ConnectToDB()
 	//var a = model.Food{
