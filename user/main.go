@@ -1,12 +1,14 @@
 package main
 
-import "user/grpc/client"
+import (
+	"user/route"
+)
 
 func main() {
 	//pkg.Mysql()
 	//pkg.ViperInit()
-	//route.InitRouter()
+	route.InitRouter()
 	//service.KafkaSend()
-	client.C()
+	//client.C()
 
 }

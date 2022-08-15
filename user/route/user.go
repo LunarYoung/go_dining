@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"user/controller"
 	"user/pkg"
+	"user/websocket"
 )
 
 func InitRouter() {
@@ -18,6 +19,8 @@ func InitRouter() {
 		c := controller.NewUserController()
 		v1.POST("/reg", c.Create)
 		v1.POST("/login", c.Login)
+		v1.GET("/ws", websocket.WsHandler)
+		v1.POST("/ws/send", websocket.Send)
 
 	}
 
@@ -47,7 +50,7 @@ func InitRouter() {
 	//设置外部访问静态资源
 	//router.StaticFS("/imageAssets", http.Dir("./imageAssets"))
 
-	err := router.Run(":80")
+	err := router.Run(":8089")
 	if err != nil {
 		return
 	}
