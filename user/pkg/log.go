@@ -17,8 +17,8 @@ var (
 
 // 日志记录到文件
 func Logger() gin.HandlerFunc {
-	logFilePath := Config.GetString("log.path")
-	logFileName := Config.GetString("log.name")
+	logFilePath := RemoteViper.GetString("log.path")
+	logFileName := RemoteViper.GetString("log.name")
 	// 日志文件
 	fileName := path.Join(logFilePath, logFileName)
 	// 写入文件
