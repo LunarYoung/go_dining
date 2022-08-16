@@ -8,17 +8,19 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/golang/protobuf v1.5.2
 	github.com/gomodule/redigo v1.8.9
-	github.com/gorilla/websocket v1.5.0 // indirect
+	github.com/gorilla/websocket v1.5.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jonboulle/clockwork v0.3.0 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
-	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-micro/v2 v2.9.1
 	github.com/micro/go-plugins/registry/nacos/v2 v2.0.0-20201025091542-fa097e59f8ac
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
+	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.12.0
+	github.com/yoyofxteam/nacos-viper-remote v0.4.0
+	go.mongodb.org/mongo-driver v1.10.1
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
 	golang.org/x/net v0.0.0-20220708220712-1185a9018129
 	gorm.io/driver/mysql v1.3.5
