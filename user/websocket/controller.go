@@ -2,10 +2,9 @@ package websocket
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
 	"log"
+	"user/model/rep"
 )
 
 func Send(g *gin.Context) {
@@ -18,8 +17,19 @@ func Send(g *gin.Context) {
 
 	msg, _ := json.Marshal(req.MsgContent)
 	var t = Manager.Clients[req.SendTo]
-	err := t.Socket.WriteMessage(websocket.TextMessage, msg)
-	if err != nil {
-		fmt.Println(err.Error())
+	t.SendChan <- msg
+	SaveMongo(req)
+
+}
+
+func Query(g *gin.Context) {
+	var req MsgFirstReq
+	if err := g.ShouldBind(&req); err != nil {
+		log.Println(err.Error())
+		return
 	}
+
+	var r = rep.NewNoPageRep()
+	r.Date = QueryMongo(req)
+	g.JSON(200, r)
 }

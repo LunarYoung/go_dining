@@ -10,6 +10,18 @@ type Date struct {
 	PageRep PageRep
 }
 
+type NoPageRep struct {
+	Code int
+	Msg  string
+	Date interface{}
+}
+
+func NewNoPageRep() (rep NoPageRep) {
+	rep.Msg = "ok"
+	rep.Code = 200
+	return rep
+}
+
 type Rep struct {
 	Code int
 	Msg  string

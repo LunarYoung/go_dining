@@ -20,6 +20,7 @@ func InitRouter() {
 		v1.POST("/reg", c.Create)
 		v1.POST("/login", c.Login)
 		v1.GET("/ws", websocket.WsHandler)
+		v1.POST("/ws/query", websocket.Query)
 		v1.POST("/ws/send", websocket.Send)
 
 	}

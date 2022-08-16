@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-
 	"net/http"
 	"time"
 )
@@ -13,7 +12,7 @@ type Client struct {
 	Id             string
 	LastOnlineTime time.Time
 	Socket         *websocket.Conn
-	Send           chan []byte
+	SendChan       chan []byte
 }
 
 type ClientManager struct {
@@ -26,7 +25,8 @@ var Manager = ClientManager{
 
 func WsHandler(g *gin.Context) {
 	connectId := g.Query("connect_id")
-	fmt.Println("qwe")
+	fmt.Println(connectId)
+
 	conn, err := (&websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool { // CheckOrigin解决跨域问题
 			return true
@@ -40,19 +40,22 @@ func WsHandler(g *gin.Context) {
 		Id:             connectId,
 		LastOnlineTime: time.Now(),
 		Socket:         conn,
-		Send:           make(chan []byte),
+		SendChan:       make(chan []byte, 10),
 	}
 
 	Manager.Clients[connectId] = client
-
-	go client.Read()
+	go client.Read(client.SendChan)
 
 }
-func (c *Client) Read() {
+func (c *Client) Read(ch chan []byte) {
 	defer func() {
 		_ = c.Socket.Close()
 	}()
 	for {
+		err := c.Socket.WriteMessage(websocket.TextMessage, <-ch)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 		c.Socket.PongHandler()
 	}
 
