@@ -4,15 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"strconv"
+	"user/middleware"
 	"user/model/rep"
 	"user/model/req"
-	"user/pkg"
 	"user/service"
 )
 
 type UserController struct {
-	s     service.UserService
-	redis pkg.RedisUtil
+	s service.UserService
 }
 
 func NewUserController() UserController {
@@ -62,17 +61,17 @@ func (u UserController) Login(g *gin.Context) {
 	var flag = u.s.Login(r)
 	if flag {
 		//返回token
-		var myClaims = pkg.MyClaims{
+		var myClaims = middleware.MyClaims{
 			Phone: r.Phone,
 		}
-		var tokenUtil = pkg.NewJWT()
+		var tokenUtil = middleware.NewJWT()
 		var token, _ = tokenUtil.CreateToken(myClaims)
 		g.JSON(200, rep.Token{
 			Code:  200,
 			Token: token,
 		})
 		//存到redis，自动过期
-		err := pkg.SetStr(token, strconv.Itoa(r.Phone))
+		err := middleware.SetStr(token, strconv.Itoa(r.Phone))
 		if err != nil {
 			return
 		}

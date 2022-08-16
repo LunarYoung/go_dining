@@ -1,13 +1,9 @@
-package pkg
+package middleware
 
 import (
 	"fmt"
 	"github.com/gomodule/redigo/redis"
 )
-
-type RedisUtil struct {
-	client redis.Conn
-}
 
 var Client redis.Conn
 
@@ -20,13 +16,13 @@ func InitRedis() {
 }
 
 func SetStr(key string, value string) error {
-	fmt.Println("redis")
 	_, err := Client.Do("setex", key, 86400, value)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	return err
 }
+
 func SetMap(mapName string, k string, v string) error {
 	_, err := Client.Do("HSet", mapName, k, v)
 	return err

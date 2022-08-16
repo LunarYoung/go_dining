@@ -4,8 +4,8 @@ import (
 	uuid "github.com/satori/go.uuid"
 	_ "gorm.io/gorm"
 	"time"
+	"user/middleware"
 	"user/model"
-	"user/pkg"
 )
 
 type UserRepository interface {
@@ -22,9 +22,9 @@ func (c userRepository) AppCreate(req model.AppUser) {
 	if req.WxId != "" {
 		req.SocketId = uuid.NewV4().String()
 		req.RegTime = time.Now().Format("2006-01-02 15:04:05")
-		pkg.Db.Create(&req)
+		middleware.Db.Create(&req)
 	} else {
-		pkg.Db.Model(&model.AppUser{}).Where("id", req.Id).Updates(req)
+		middleware.Db.Model(&model.AppUser{}).Where("id", req.Id).Updates(req)
 	}
 }
 
@@ -33,10 +33,10 @@ func NewUserService() UserRepository {
 }
 func (c userRepository) Login(req model.Org) string {
 	var rep model.Org
-	pkg.Db.Where("phone =?", req.Phone).Find(&rep)
+	middleware.Db.Where("phone =?", req.Phone).Find(&rep)
 	return rep.PassWord
 }
 
 func (c userRepository) Create(req model.Org) {
-	pkg.Db.Create(&req)
+	middleware.Db.Create(&req)
 }

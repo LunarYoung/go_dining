@@ -1,4 +1,4 @@
-package pkg
+package middleware
 
 //本来用etcd做配置中心，后来用阿里nacos算了
 

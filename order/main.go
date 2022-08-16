@@ -1,29 +1,20 @@
 package main
 
-import "order/pkg"
+import "order/middleware"
 
 func main() {
 
-	//pkg.ViperInit()
-	//pkg.InitEs()
-	//pkg.NewOss()
+	//middleware.InitEs()
+	//middleware.NewOss()
 	//route.InitRouter()
-	//pkg.ETCD()
-	//server.S()
-	pkg.Nacos()
+
+	middleware.Nacos()
 	//service.KafkaRe()
-	//pkg.ConnectToDB()
-	//var a = model.Food{
-	//	Name:  "dfsd222f",
-	//	Price: "dfds222f",
-	//}
-	//var b = model.Order{Name: "dd222d", Id: 12}
-	//pkg.AddOne(a, "order")
-	//pkg.AddOne(b, "food")
-	//pkg.Create()
+
+	//middleware.Create()
 	//delete()
-	//pkg.Update()
+	//middleware.Update()
 	//gets()
-	//pkg.Query()
-	//pkg.List(2, 1)
+	//middleware.Query()
+	//middleware.List(2, 1)
 }

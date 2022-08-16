@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"time"
-	"user/pkg"
+	"user/middleware"
 )
 
 func SaveMongo(req MsgInfoReq) {
@@ -15,12 +15,12 @@ func SaveMongo(req MsgInfoReq) {
 	rep.MsgDate = time.Now().Format("2006-01-02 15:04:05")
 	rep.SendTo = req.SendTo
 	rep.SendFrom = req.SendFrom
-	pkg.AddOne(rep, "msg")
+	middleware.AddOne(rep, "msg")
 }
 
-func QueryMongo(req MsgFirstReq) (rep []pkg.ContractChatMsgInfo) {
+func QueryMongo(req MsgFirstReq) (rep []middleware.ContractChatMsgInfo) {
 	fmt.Println(req)
 	m := bson.M{"$or": []bson.M{{"sendfrom": req.SendFrom, "sendto": req.SendTo, "org_id": req.OrgId}, {"sendto": req.SendFrom, "sendfrom": req.SendTo, "org_id": req.OrgId}}}
-	rep = pkg.GetList(m, req.Size)
+	rep = middleware.GetList(m, req.Size)
 	return rep
 }

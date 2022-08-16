@@ -9,6 +9,7 @@ import (
 	"log"
 	"mime/multipart"
 	"net/http"
+	"order/middleware"
 	"order/model"
 	"order/model/rep"
 	"order/model/req"
@@ -64,7 +65,7 @@ func (u OrderController) Oss(g *gin.Context) {
 	}
 	id := uuid.NewV4()
 	ids := id.String()
-	url, err := pkg.Upload(ids+".png", fileByte)
+	url, err := middleware.Upload(ids+".png", fileByte)
 	fmt.Println(err)
 	g.JSON(http.StatusOK, gin.H{
 		"dataType": "Image",

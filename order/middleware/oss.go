@@ -1,4 +1,4 @@
-package pkg
+package middleware
 
 import (
 	"bytes"
@@ -10,11 +10,11 @@ var Bucket *oss.Bucket
 
 func NewOss() {
 
-	client, err := oss.New(Config.GetString("oss.endpoint"), Config.GetString("oss.accessKeyId"), Config.GetString("oss.accessKeySecret"))
+	client, err := oss.New(RemoteViper.GetString("oss.endpoint"), RemoteViper.GetString("oss.accessKeyId"), RemoteViper.GetString("oss.accessKeySecret"))
 	if err != nil {
 
 	}
-	Bucket, err = client.Bucket(Config.GetString("oss.bucketName"))
+	Bucket, err = client.Bucket(RemoteViper.GetString("oss.bucketName"))
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -26,5 +26,5 @@ func Upload(fileName string, fileByte []byte) (url string, err error) {
 	if err != nil {
 		return url, err
 	}
-	return Config.GetString("oss.pre") + fileName, nil
+	return RemoteViper.GetString("oss.pre") + fileName, nil
 }

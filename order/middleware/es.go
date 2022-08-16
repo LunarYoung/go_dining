@@ -1,4 +1,4 @@
-package pkg
+package middleware
 
 import (
 	"context"
@@ -15,7 +15,7 @@ var client *elastic.Client
 func InitEs() {
 
 	options := []elastic.ClientOptionFunc{
-		elastic.SetURL(Config.GetString("es")), elastic.SetSniff(false),
+		elastic.SetURL(RemoteViper.GetString("es")), elastic.SetSniff(false),
 	}
 
 	var err error
@@ -29,13 +29,13 @@ func InitEs() {
 	//	panic(err)
 	//
 	//}
-	info, code, err := client.Ping(Config.GetString("es")).Do(context.Background())
+	info, code, err := client.Ping(RemoteViper.GetString("es")).Do(context.Background())
 	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("Elasticsearch returned with code %d and version %s\n", code, info.Version.Number)
 
-	esversion, err := client.ElasticsearchVersion(Config.GetString("es"))
+	esversion, err := client.ElasticsearchVersion(RemoteViper.GetString("es"))
 	if err != nil {
 		panic(err)
 	}

@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/websocket"
 	"net/http"
 	"time"
-	"user/pkg"
+	"user/middleware"
 )
 
 const OnlineMap = "onlineMap"
@@ -28,7 +28,7 @@ var Manager = ClientManager{
 
 func WsHandler(g *gin.Context) {
 	connectId := g.Query("connect_id")
-	err := pkg.SetMap(OnlineMap, connectId, "true")
+	err := middleware.SetMap(OnlineMap, connectId, "true")
 	if err != nil {
 		return
 	}

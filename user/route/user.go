@@ -3,15 +3,15 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 	"user/controller"
-	"user/pkg"
+	"user/middleware"
 	"user/websocket"
 )
 
 func InitRouter() {
 	router := gin.Default()
 
-	router.Use(pkg.Cors())
-	//router.Use(pkg.Logger())
+	router.Use(middleware.Cors())
+	//router.Use(middleware.Logger())
 
 	//pc端口
 	v1 := router.Group("base")
@@ -26,7 +26,7 @@ func InitRouter() {
 
 	}
 
-	router.Use(pkg.JwtToken())
+	router.Use(middleware.JwtToken())
 
 	v2 := router.Group("dining")
 	{

@@ -1,4 +1,4 @@
-package pkg
+package middleware
 
 import (
 	"gorm.io/driver/mysql"
@@ -19,7 +19,7 @@ func Mysql() {
 	if err != nil {
 		panic(err)
 	}
-	//defer db.Close()
+	//defer Db.Close()
 
 	// 自动迁移
 	err1 := db.AutoMigrate(
@@ -27,7 +27,7 @@ func Mysql() {
 		&model.OrgUser{},
 		&model.Org{},
 	)
-	if err != nil {
+	if err1 != nil {
 		panic(err1)
 		return
 	}

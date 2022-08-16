@@ -1,6 +1,7 @@
 package service
 
 import (
+	"order/middleware"
 	"order/model"
 	"order/model/req"
 	"order/pkg"
@@ -13,25 +14,22 @@ type OrderService interface {
 }
 
 type orderService struct {
-	redis pkg.RedisUtil
 }
 
 func (u orderService) ChangeOrder(r req.OrderSearchReq, i string) {
-	pkg.Update(r, i)
+	middleware.Update(r, i)
 }
 
 func NewOrderService() OrderService {
-	return &orderService{
-		redis: pkg.NewRedisClient(),
-	}
+	return &orderService{}
 }
 
 func (u orderService) SaveOrder(m model.Order, i string) {
 	for {
 		id := pkg.Uuid()
-		if u.redis.GetStr(id) == "" {
+		if middleware.GetStr(id) == "" {
 			m.PickUp = id
-			err := u.redis.SetStr(id, "pickup num")
+			err := middleware.SetStr(id, "pickup num")
 			if err != nil {
 				return
 			}
@@ -39,9 +37,9 @@ func (u orderService) SaveOrder(m model.Order, i string) {
 		}
 	}
 
-	pkg.Create(m, i, m.OrderId)
+	middleware.Create(m, i, m.OrderId)
 }
 
 func (u orderService) SearchOrder(r req.OrderSearchReq, i string) (re []model.Order, count int64) {
-	return pkg.Query(r, i)
+	return middleware.Query(r, i)
 }

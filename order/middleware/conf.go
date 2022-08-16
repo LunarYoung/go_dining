@@ -1,4 +1,4 @@
-package pkg
+package middleware
 
 import (
 	"github.com/spf13/viper"
@@ -25,7 +25,7 @@ func Nacos() {
 	}
 	RemoteViper.SetConfigType("yaml")
 
-	_ = RemoteViper.ReadRemoteConfig()           //sync get remote configs to RemoteViper instance memory . for example , RemoteViper.GetString(key)
+	_ = RemoteViper.ReadRemoteConfig()           //sync get remote configs to remoteViper instance memory . for example , remoteViper.GetString(key)
 	_ = RemoteViper.WatchRemoteConfigOnChannel() //异步监听Nacos中的配置变化，如发生配置更改，会直接同步到 viper实例中。
 
 }

@@ -1,16 +1,16 @@
 package main
 
 import (
-	"user/pkg"
+	"user/middleware"
 	"user/route"
 )
 
 func main() {
 
-	pkg.Nacos()
-	pkg.Mysql()
-	pkg.InitRedis()
-	pkg.ConnectToDB()
+	middleware.Nacos()
+	middleware.Mysql()
+	middleware.InitRedis()
+	middleware.ConnectToDB()
 	route.InitRouter()
 	//service.KafkaSend()
 	//client.C()
