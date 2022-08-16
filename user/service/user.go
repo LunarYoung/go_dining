@@ -1,6 +1,8 @@
 package service
 
 import (
+	"github.com/jinzhu/copier"
+	"time"
 	"user/model"
 	"user/model/req"
 	"user/pkg"
@@ -9,11 +11,22 @@ import (
 
 type UserService interface {
 	Reg(req req.Org)
+	AppCreate(req req.AppUserReq)
 	Login(req req.Org) (flag bool)
 }
 
 type userService struct {
 	repo repo.UserRepository
+}
+
+func (u userService) AppCreate(req req.AppUserReq) {
+	var m model.AppUser
+	err := copier.Copy(&m, &req)
+	if err != nil {
+		panic(err)
+	}
+	m.LastLoginTime = time.Now().Format("2006-01-02 15:04:05")
+	u.repo.AppCreate(m)
 }
 
 func NewUserService() UserService {

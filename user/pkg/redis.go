@@ -9,31 +9,49 @@ type RedisUtil struct {
 	client redis.Conn
 }
 
-var RedisClient RedisUtil
+var Client redis.Conn
 
-func NewRedisClient() RedisUtil {
-	RedisClient = RedisUtil{
-		client: Client,
+func InitRedis() {
+	var rErr error
+	Client, rErr = redis.Dial("tcp", RemoteViper.GetString("redis.host"), redis.DialDatabase(RemoteViper.GetInt("redis.db")))
+	if rErr != nil {
+		panic("failed to redis:" + rErr.Error())
 	}
-	return RedisClient
 }
 
-func (rs *RedisUtil) SetStr(key string, value string) error {
+func SetStr(key string, value string) error {
 	fmt.Println("redis")
-	_, err := rs.client.Do("setex", key, 86400, value)
+	_, err := Client.Do("setex", key, 86400, value)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-
 	return err
 }
-func (rs *RedisUtil) DelByKey(key string) error {
-	_, err := rs.client.Do("DEL", key)
+func SetMap(mapName string, k string, v string) error {
+	_, err := Client.Do("HSet", mapName, k, v)
 	return err
 }
 
-func (rs *RedisUtil) GetStr(key string) string {
-	val, err := rs.client.Do("Get", key)
+func GetMap(mapName string, k string) string {
+	val, err := Client.Do("HGet", mapName, k)
+	if err != nil {
+		return ""
+	}
+	return string(val.([]byte))
+}
+func DelMap(mapName string, k string) error {
+	//_, err := Client.Do("HDel", mapName, k)
+	_, err := Client.Do("HDel", "books", "abc")
+	return err
+}
+
+func DelByKey(key string) error {
+	_, err := Client.Do("DEL", key)
+	return err
+}
+
+func GetStr(key string) string {
+	val, err := Client.Do("Get", key)
 	if err != nil {
 		return " "
 	} else {

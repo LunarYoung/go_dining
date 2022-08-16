@@ -17,8 +17,7 @@ type UserController struct {
 
 func NewUserController() UserController {
 	return UserController{
-		s:     service.NewUserService(),
-		redis: pkg.NewRedisClient(),
+		s: service.NewUserService(),
 	}
 }
 
@@ -26,6 +25,10 @@ func (u UserController) Test(g *gin.Context) {
 	g.JSON(200, "测试token")
 }
 
+// Create
+// @description: 管理端注册
+// @param g
+// @2022-08-16 15:03:44
 func (u UserController) Create(g *gin.Context) {
 
 	var r req.Org
@@ -37,6 +40,19 @@ func (u UserController) Create(g *gin.Context) {
 	g.JSON(200, rep.NewBSSRep())
 }
 
+// AppCreate
+// @description: app用户注册
+// @param g
+// @2022-08-16 15:05:03
+
+func (u UserController) AppCreate(g *gin.Context) {
+	var r req.AppUserReq
+	if err := g.ShouldBind(&r); err != nil {
+		log.Println(err.Error())
+		return
+	}
+	u.s.AppCreate(r)
+}
 func (u UserController) Login(g *gin.Context) {
 	var r req.Org
 	if err := g.ShouldBind(&r); err != nil {
@@ -56,7 +72,7 @@ func (u UserController) Login(g *gin.Context) {
 			Token: token,
 		})
 		//存到redis，自动过期
-		err := u.redis.SetStr(token, strconv.Itoa(r.Phone))
+		err := pkg.SetStr(token, strconv.Itoa(r.Phone))
 		if err != nil {
 			return
 		}

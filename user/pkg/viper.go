@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	Client redis.Conn
+	//Client redis.Conn
 	Config *viper.Viper
 )
 

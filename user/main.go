@@ -6,9 +6,10 @@ import (
 )
 
 func main() {
-	//pkg.Mysql()
-	//pkg.ViperInit()
+
 	pkg.Nacos()
+	pkg.Mysql()
+	pkg.InitRedis()
 	pkg.ConnectToDB()
 	route.InitRouter()
 	//service.KafkaSend()

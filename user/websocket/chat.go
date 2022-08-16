@@ -6,7 +6,10 @@ import (
 	"github.com/gorilla/websocket"
 	"net/http"
 	"time"
+	"user/pkg"
 )
+
+const OnlineMap = "onlineMap"
 
 type Client struct {
 	Id             string
@@ -25,7 +28,10 @@ var Manager = ClientManager{
 
 func WsHandler(g *gin.Context) {
 	connectId := g.Query("connect_id")
-	fmt.Println(connectId)
+	err := pkg.SetMap(OnlineMap, connectId, "true")
+	if err != nil {
+		return
+	}
 
 	conn, err := (&websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool { // CheckOrigin解决跨域问题

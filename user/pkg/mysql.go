@@ -10,7 +10,7 @@ import (
 var Db *gorm.DB
 
 func Mysql() {
-	dsn := "root:123456@tcp(106.13.192.119:3306)/ding?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := RemoteViper.GetString("mysql")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,

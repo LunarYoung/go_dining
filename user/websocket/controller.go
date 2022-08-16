@@ -14,12 +14,12 @@ func Send(g *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-
 	msg, _ := json.Marshal(req.MsgContent)
 	var t = Manager.Clients[req.SendTo]
 	t.SendChan <- msg
 	SaveMongo(req)
-
+	var r = rep.BaseRep{Code: 200}
+	g.JSON(200, r)
 }
 
 func Query(g *gin.Context) {

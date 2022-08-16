@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"context"
-	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -27,7 +26,7 @@ var collection *mongo.Collection // collection 话柄
 func ConnectToDB() {
 	// 设置连接超时时间
 	uri := RemoteViper.GetString("mongo")
-	fmt.Println(uri)
+
 	name := "msg"               //数据库名
 	timeout := time.Duration(2) // 链接超时时间
 
